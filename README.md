@@ -1,48 +1,73 @@
-# TP GitLab CI - Pipeline CI/CD Spring Boot
+## TP GitLab CI - Pipeline CI/CD Spring Boot
 
-## Description
+### Description
 
-Ce projet met en place un pipeline CI/CD avec **GitLab CI** pour une application Spring Boot. Le projet utilisé est **ExamJavaM1GL** — une application de gestion des Classes et Secteurs académiques développée avec Spring Boot et PostgreSQL.
+Ce projet met en place un pipeline CI/CD avec GitLab CI pour une application Spring Boot.
+Le projet utilisé est ExamJavaM1GL, une application de gestion des classes et secteurs académiques développée avec Spring Boot et PostgreSQL.
 
-Le pipeline automatise le build du projet et prépare le déploiement d'une image Docker sur Docker Hub.
+Le pipeline automatise les étapes de build et de déploiement via Docker.
 
----
+### Objectif du projet
 
-## Prérequis
+L’objectif de ce TP est de :
 
-- Un compte [GitLab](https://gitlab.com)
-- Git
+Mettre en place une intégration continue avec GitLab CI
+Automatiser la compilation et les tests d’un projet Spring Boot
+Générer un artefact exécutable (.jar)
+Préparer et automatiser le déploiement via Docker
+Comprendre le fonctionnement d’un pipeline CI/CD
 
----
+### Prérequis
+Compte GitLab
+Git installé localement
+Maven et Java 17
+Docker (pour la partie déploiement)
 
-## Contenu du fichier .gitlab-ci.yml
+### Pipeline GitLab CI/CD
 
-Le pipeline est composé de 2 stages :
+Le pipeline est structuré en deux stages principaux.
 
-### stage 1 : build-test
-- Utilise l'image Maven `3.8.3-openjdk-17`
-- Compile le projet avec `mvn clean package -DskipTests`
-- Génère le JAR `thymeleaf-springboot.jar` comme artefact
-- Met en cache le dossier `.m2/repository` pour accélérer les builds suivants
+#### Stage 1 : build-test
 
-### stage 2 : deploy
-- Utilise l'image `docker:latest`
-- Build l'image Docker du projet
-- Push l'image sur Docker Hub
-- Déclenchement **manuel** (`when: manual`)
+Ce stage utilise l’image Maven avec Java 17.
 
----
+Il permet de :
 
-## Captures d'écran
+Compiler le projet
+Générer le fichier .jar
+Exécuter les tests (selon configuration)
 
-### Projet sur GitLab
-<!-- capture repo GitLab -->
+Commande utilisée : mvn clean package -DskipTests
 
-### Pipeline réussi - stage build-test
-<!-- capture pipeline vert -->
+Optimisations :
 
----
+Mise en cache du répertoire .m2/repository pour accélérer les builds
+### Stage 2 : deploy
 
-## Auteur
+Ce stage utilise Docker.
 
-**Ndeye Mbaye** — M1 Génie Logiciel
+Il permet de :
+
+Construire une image Docker de l’application
+Pousser l’image vers Docker Hub
+Déclenchement manuel du déploiement (when: manual)
+
+Cette étape permet de contrôler le passage en production.
+Workflow du pipeline
+Push du code sur GitLab
+Exécution automatique du stage build-test
+Génération du fichier .jar
+Validation du build
+Déclenchement manuel du stage deploy
+Construction et publication de l’image Docker
+
+### Captures d’écran
+
+#### Repository GitLab
+
+<img width="1917" height="952" alt="image" src="https://github.com/user-attachments/assets/a75b4ce1-9887-4f39-98b6-6792ce6a364c" />
+
+#### Pipeline réussi (build-test)
+
+<img width="1909" height="950" alt="image" src="https://github.com/user-attachments/assets/cd742290-5d5c-4c39-933b-7241025e46b2" />
+
